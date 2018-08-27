@@ -1,0 +1,8 @@
+version: '2.0'
+
+services:
+  build:
+    image: docker-ethos-xmr-stak
+    container_name: docker-ethos-xmr-stak
+    build:
+      context: .
