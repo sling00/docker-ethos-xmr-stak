@@ -1,5 +1,5 @@
 # docker-ethos-xmr-stak
-Based off of docker-ethos-ethminer originally by Trick77
+Based off of docker-ethos-ethminer originally by trick77 https://github.com/trick77/docker-ethos-ethminer
 
 Docker image which makes building your own or preferred version of xmr-stak for ethOS super easy without polluting your system with openCL and CUDA libraries. The resulting binary can be used to replace the existing xmr-stak binary and .so files in /opt/miners/xmr-stak of your mining rig. Make sure to backup the existing binary though. Please be  aware that the new binary may get replaced with every manual update of ethOS and/or its miners. 
 
