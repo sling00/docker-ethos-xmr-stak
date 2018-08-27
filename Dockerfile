@@ -4,7 +4,7 @@ RUN \
   sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
   apt-get -qq update && \
   DEBIAN_FRONTEND=noninteractive apt-get -y upgrade && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends curl mesa-common-dev libmicrohttpd-dev libssl-dev libhwloc-dev software-properties-common && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git opencl-headers ocl-icd-opencl-dev curl mesa-common-dev libmicrohttpd-dev libssl-dev libhwloc-dev software-properties-common && \
   add-apt-repository -y ppa:ubuntu-toolchain-r/test && \
   apt-get -qq update && \
   apt-get install -y gcc-6 g++-6 make
@@ -37,13 +37,10 @@ ARG XMRSTAK_GIT_BRANCH=master
 RUN \
   cd /build && \
   rm -rf xmr-stak && \
-  apt-get -qq update && \
-  apt-get install -y git && \
   git clone ${XMRSTAK_GIT_URL} --depth=1 xmr-stak && \
   mkdir ./xmr-stak/build
 
 RUN \
-  apt-get install -y opencl-headers ocl-icd-opencl-dev && \
   cd /build/xmr-stak/build && \
   cmake -DCMAKE_LINK_STATIC=ON -DCUDA_ENABLE=ON -DOpenCL_ENABLE=ON ../ && \
-  cmake --build .
+  cmake -DCMAKE_LINK_STATIC=ON--build .
