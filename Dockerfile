@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-ARG CMAKE_URL=https://cmake.org/files/LatestRelease/cmake-3.12.1.tar.gz
+ARG CMAKE_URL=https://cmake.org/files/v3.13/cmake-3.13.0-rc1.tar.gz
 RUN \
   sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
   apt-get -qq update && \
@@ -43,4 +43,7 @@ RUN \
 RUN \
   cd /build/xmr-stak/build && \
   cmake -DCMAKE_LINK_STATIC=ON -DCUDA_ENABLE=ON -DOpenCL_ENABLE=ON ../ && \
-  cmake -DCMAKE_LINK_STATIC=ON--build .
+  cmake -DCMAKE_LINK_STATIC=ON--build . && \
+  make
+
+CMD ["cp", "/build/xmr-stak/build/xmr-stak", "/build/xmr-stak/build/libxmrstak*.so", "/host"] 
