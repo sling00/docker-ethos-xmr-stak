@@ -19,7 +19,7 @@ RUN \
   rm -rf /var/lib/apt/lists/* && \
   mkdir /build
 
-ARG CUDA_TOOLKIT_URL=https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda_9.0.176_384.81_linux-run
+ARG CUDA_TOOLKIT_URL=https://developer.nvidia.com/compute/cuda/10.0/Prod/local_installers/cuda_10.0.130_410.48_linux
 
 RUN \
   cd /build && \
@@ -43,7 +43,7 @@ RUN \
 RUN \
   cd /build/xmr-stak/build && \
   cmake -DCMAKE_LINK_STATIC=ON -DCUDA_ENABLE=ON -DOpenCL_ENABLE=ON ../ && \
-  cmake -DCMAKE_LINK_STATIC=ON--build . && \
+  cmake -DCMAKE_LINK_STATIC=ON --build . && \
   make
 
 WORKDIR /build/xmr-stak/build/bin
