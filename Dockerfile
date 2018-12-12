@@ -33,18 +33,17 @@ RUN \
 ARG XMRSTAK_GIT_URL=https://github.com/fireice-uk/xmr-stak
 ARG XMRSTAK_GIT_BRANCH=master
 
-
 RUN \
   cd /build && \
   rm -rf xmr-stak && \
   git clone ${XMRSTAK_GIT_URL} --depth=1 xmr-stak && \
   mkdir ./xmr-stak/build
 
-RUN \
-  cd /build/xmr-stak/build && \
-  cmake -DXMR-STAK_COMPILE=generic -DCPU_ENABLE=ON -DCMAKE_LINK_STATIC=ON -DCUDA_ENABLE=ON -DOpenCL_ENABLE=ON ../ && \
-  cmake -DCMAKE_LINK_STATIC=ON --build . && \
-  make
+WORKDIR /build/xmr-stak/build
+RUN cmake -DXMR-STAK_COMPILE=generic -DCPU_ENABLE=ON -DCMAKE_LINK_STATIC=ON -DCUDA_ENABLE=ON -DOpenCL_ENABLE=ON --build . ../
 
-WORKDIR /build/xmr-stak/build/bin
-CMD ["cp", "xmr-stak", "libxmrstak_cuda_backend.so", "libxmrstak_opencl_backend.so", "/host"] 
+RUN \
+  printf "#!/bin/bash\ngit pull\nmake\ncp bin/xmr-stak bin/libxmrstak_cuda_backend.so bin/libxmrstak_opencl_backend.so /host" > run.sh \
+&& chmod u+x run.sh
+
+CMD [ "/bin/bash", "-c", "/build/xmr-stak/build/run.sh" ] 
