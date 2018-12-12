@@ -14,7 +14,7 @@ RUN \
   echo "Downloading cmake" && \
   curl -o /tmp/cmake.tar.gz ${CMAKE_URL} && \
   tar -xzf /tmp/cmake.tar.gz -C /tmp/ && \
-  cd /tmp/cmake-*/ && ./configure && make && sudo make install && \
+  cd /tmp/cmake-*/ && ./configure && make && make install && \
   update-alternatives --install /usr/bin/cmake cmake /usr/local/bin/cmake 1 --force && \
   rm -rf /var/lib/apt/lists/* && \
   mkdir /build
@@ -46,4 +46,5 @@ RUN \
   cmake -DCMAKE_LINK_STATIC=ON--build . && \
   make
 
-CMD ["cp", "/build/xmr-stak/build/xmr-stak", "/build/xmr-stak/build/libxmrstak*.so", "/host"] 
+WORKDIR /build/xmr-stak/build/bin
+CMD ["cp", "xmr-stak", "libxmrstak_cuda_backend.so", "libxmrstak_opencl_backend.so", "/host"] 
